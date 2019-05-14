@@ -4,18 +4,19 @@ import GameState from "./GameState.js";
 // Window resizing
 function resize(width, height) {
 	var canvas = document.querySelector("canvas");
-	var windowWidth = window.innerWidth;
-	var windowHeight = window.innerHeight;
-	var windowRatio = windowWidth / windowHeight;
+	var parentWidth = canvas.parentElement.offsetWidth;
+	var parentHeight = canvas.parentElement.offsetHeight;
+
+	var windowRatio = parentWidth / parentHeight;
 	var gameRatio = width / height;
 
 	if(windowRatio < gameRatio) {
-	  canvas.style.width = windowWidth + "px";
-	  canvas.style.height = (windowWidth / gameRatio) + "px";
+	  canvas.style.width = parentWidth + "px";
+	  canvas.style.height = (parentWidth / gameRatio) + "px";
 	}
 	else {
-	  canvas.style.width = (windowHeight * gameRatio) + "px";
-	  canvas.style.height = windowHeight + "px";
+	  canvas.style.width = (parentHeight * gameRatio) + "px";
+	  canvas.style.height = parentHeight + "px";
 	}
 }
 
