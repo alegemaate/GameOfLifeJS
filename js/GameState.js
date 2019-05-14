@@ -22,7 +22,7 @@ export default class GameState extends Phaser.Scene {
     this.cellSize = 5;
     this.tickerTime = 50;
 
-    this.pausedText = this.add.text(10, 10, 'PAUSED - Press the SPACE BAR', { font: '16px Courier', fill: '#ffffff' }).setShadow(1, 1);
+    this.pausedText = this.add.text(10, 10, 'PAUSED - Press the P', { font: '16px Courier', fill: '#ffffff' }).setShadow(1, 1);
 
     this.graphics = this.add.graphics({ lineStyle: { width: 4, color: 0xaa00aa } });
 
@@ -34,15 +34,19 @@ export default class GameState extends Phaser.Scene {
     this.l_map = Array(this.LIFE_W).fill().map(() => Array(this.LIFE_H).fill(0));
 
     this.input.keyboard.on('keydown', function (event) {
-        if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.SPACE) {
+        if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.P) {
           this.togglePlay();
         }
     }, this);
 
     this.input.on('pointermove', function (pointer) {
-        if(pointer.isDown){
-          this.click(pointer);
-        }
+      if(pointer.isDown){
+        this.click(pointer);
+      }
+    }, this);
+
+    this.input.on('pointerdown', function (pointer) {
+      this.click(pointer);
     }, this);
 
     this.timedEvent = this.time.delayedCall(this.tickerTime, this.ticker, [], this);
@@ -119,8 +123,8 @@ export default class GameState extends Phaser.Scene {
     this.paused = !this.paused;
 
     if (this.paused) 
-      this.pausedText.text = 'PAUSED - Press SPACE BAR to play';
+      this.pausedText.text = 'PAUSED - Press P to play';
     else
-      this.pausedText.text = 'PLAYING - Press SPACE BAR to pause';
+      this.pausedText.text = 'PLAYING - Press P to pause';
   }
 }

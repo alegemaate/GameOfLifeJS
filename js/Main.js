@@ -2,12 +2,12 @@ import MenuState from "./MenuState.js";
 import GameState from "./GameState.js";
 
 // Window resizing
-function resize(game) {
+function resize(width, height) {
 	var canvas = document.querySelector("canvas");
 	var windowWidth = window.innerWidth;
 	var windowHeight = window.innerHeight;
 	var windowRatio = windowWidth / windowHeight;
-	var gameRatio = game.config.width / game.config.height;
+	var gameRatio = width / height;
 
 	if(windowRatio < gameRatio) {
 	  canvas.style.width = windowWidth + "px";
@@ -20,16 +20,18 @@ function resize(game) {
 }
 
 // Create game
-window.onload = function() {
+window.addEventListener("load", function(event) {
   var game = new Phaser.Game({
 	  type: Phaser.AUTO,
-	  width: 500,
-	  height: 500,
+	  width: 600,
+	  height: 600,
 	  backgroundColor: '#000',
 	  parent: "game-container",
 	  scene: [ GameState, MenuState ]
 	});
 
-  resize(game);
-  window.addEventListener("resize", () => resize(game), false);
-}
+	document.querySelector("canvas").oncontextmenu = function (e) { e.preventDefault(); }
+
+  resize(game.config.width, game.config.height);
+  window.addEventListener("resize", () => resize(game.config.width, game.config.width), false);
+})
