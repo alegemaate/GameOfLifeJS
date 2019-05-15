@@ -1,3 +1,4 @@
+import Phaser from "phaser";
 import MenuState from "./MenuState.js";
 import GameState from "./GameState.js";
 
@@ -22,15 +23,17 @@ function resize(width, height) {
 
 // Create game
 window.addEventListener("load", function(event) {
-  var game = new Phaser.Game({
-	  type: Phaser.AUTO,
-	  width: 600,
-	  height: 600,
-	  backgroundColor: '#000',
-	  parent: "game-container",
-	  scene: [ GameState, MenuState ]
-	});
+  const config = {
+    type: Phaser.AUTO,
+    width: 600,
+    height: 600,
+    backgroundColor: '#000',
+    parent: "game-container",
+    scene: [ GameState, MenuState ]
+  };
 
+  const game = new Phaser.Game(config);
+  
 	document.querySelector("canvas").oncontextmenu = function (e) { e.preventDefault(); }
 
   resize(game.config.width, game.config.height);
